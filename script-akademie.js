@@ -25,7 +25,7 @@ function enhanceCourses() {
     img.alt = cfg.alt;
     img.loading = 'lazy';
     img.width = 340;
-    img.height = 160;
+    img.height = 191;
 
     visual.innerHTML = '';
     visual.appendChild(img);
@@ -35,6 +35,7 @@ function enhanceCourses() {
 function setupSearch() {
   const searchWrap = document.querySelector('[data-search]');
   if (!searchWrap) return;
+
   const input = searchWrap.querySelector('input');
   if (!input) return;
 
@@ -59,9 +60,11 @@ function setupBottomNav() {
       if (!href) return;
 
       nav.classList.add('nav-pressed');
+
       setTimeout(() => {
         window.location.href = href;
       }, 120);
+
       evt.preventDefault();
     });
   });
