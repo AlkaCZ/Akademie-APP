@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Akademie 2.0 – Cesty</title>
   <link rel="stylesheet" href="styles-7.css">
+  <script defer src="script-akademie.js"></script>
 </head>
 <body>
   <div class="phone">
@@ -42,7 +43,7 @@
             <span class="badge">4 aktivní cesty</span>
           </div>
 
-          <div class="search">
+          <div class="search" data-search>
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="7"></circle>
               <path d="m20 20-3.5-3.5"></path>
@@ -52,7 +53,7 @@
         </section>
 
         <section class="course-list">
-          <article class="course-card">
+          <article class="course-card" data-course-id="idea">
             <div class="course-visual">
               <svg viewBox="0 0 120 120" fill="none">
                 <circle cx="60" cy="60" r="34" fill="#d90206" opacity=".15"></circle>
@@ -66,7 +67,7 @@
             </div>
           </article>
 
-          <article class="course-card">
+          <article class="course-card" data-course-id="offer">
             <div class="course-visual">
               <svg viewBox="0 0 120 120" fill="none">
                 <circle cx="60" cy="60" r="34" fill="#d90206" opacity=".12"></circle>
@@ -81,7 +82,7 @@
             </div>
           </article>
 
-          <article class="course-card">
+          <article class="course-card" data-course-id="marketing">
             <div class="course-visual">
               <svg viewBox="0 0 120 120" fill="none">
                 <circle cx="60" cy="60" r="34" fill="#d90206" opacity=".12"></circle>
@@ -100,7 +101,7 @@
       </main>
     </div>
 
-    <nav class="bottom-nav">
+    <nav class="bottom-nav" data-bottom-nav>
       <a href="index.html">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 11l9-8 9 8"></path>
