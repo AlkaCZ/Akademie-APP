@@ -10,6 +10,10 @@ const courseThumbnails = {
   marketing: {
     src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/114a6e3a86899626e0d747cc3bf47bfec89a83a9.jpg',
     alt: 'Ilustrace marketingového dashboardu a růstu kampaní'
+  },
+  finance: {
+    src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/9f2f9ef6a2d0e7a4cf13c6f7e9f7f2a16e9a0c1b.jpg',
+    alt: 'Ilustrace financí, grafů a cenotvorby'
   }
 };
 
@@ -81,9 +85,22 @@ function setupHeroPulse() {
   hero.classList.add('hero-animate');
 }
 
+function setupAssistantChips() {
+  const input = document.querySelector('#assistantPrompt');
+  if (!input) return;
+
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      input.value = chip.textContent.trim();
+      input.focus();
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   enhanceCourses();
   setupSearch();
   setupBottomNav();
   setupHeroPulse();
+  setupAssistantChips();
 });

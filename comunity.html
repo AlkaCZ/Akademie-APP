@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Akademie 2.0 – Komunita</title>
-  <link rel="stylesheet" href="styles-7.css">
-  <script defer src="script-akademie.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akademie – Komunita</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="phone">
@@ -13,122 +12,70 @@
       <header class="topbar">
         <div class="topbar-row">
           <div class="brand">
-            <div class="brand-mark">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 18L12 6l8 12"></path>
-                <path d="M8 18h8"></path>
-              </svg>
-            </div>
+            <div class="brand-mark">A</div>
             <div class="brand-title">
-              <strong>NADACE</strong>
-              <span>České spořitelny</span>
+              <strong>Akademie</strong>
+              <span>Komunita a eventy</span>
             </div>
           </div>
 
-          <button class="icon-btn" aria-label="Nastavení">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"></circle>
+          <a class="icon-btn assistant-btn" href="assistant.html" aria-label="AI asistent">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v3"></path>
+              <rect x="6" y="8" width="12" height="10" rx="4"></rect>
+              <path d="M9 13h.01"></path>
+              <path d="M15 13h.01"></path>
+              <path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path>
             </svg>
-          </button>
+          </a>
         </div>
       </header>
 
       <main class="content">
-        <section class="hero-card">
-          <div class="hero-top">
-            <div>
-              <h1 class="section-title">Komunita & eventy</h1>
-              <div class="subtext">Místa, kde potkáš ostatní podnikavce a mentory.</div>
-            </div>
-            <span class="badge green">Live</span>
+        <section>
+          <h1 class="section-title">Komunita &amp; eventy</h1>
+          <p class="subtext">Místa, kde potkáš ostatní podnikavce a mentory.</p>
+        </section>
+
+        <section class="panel" style="padding:16px; display:grid; gap:12px;">
+          <h2 class="section-title" style="font-size:18px;">Nadcházející akce</h2>
+
+          <div class="metric">
+            <strong>Dnes 19:00 · Mastermind skupina</strong>
+            <span>Sdílení pokroku a peer feedback na nabídku.</span>
+          </div>
+
+          <div class="metric">
+            <strong>Zítra · Live workshop: Pricing</strong>
+            <span>Jak určit cenu prvního produktu.</span>
+          </div>
+
+          <div class="metric">
+            <strong>Pátek · Demo day checkpoint</strong>
+            <span>Prezentace mise a získaných insightů.</span>
           </div>
         </section>
 
-        <section class="leader-card">
-          <div class="section-head">
-            <div>
-              <h2 class="section-title" style="font-size:18px">Nadcházející akce</h2>
-            </div>
-          </div>
-
-          <div class="leader-row">
-            <div>
-              <div style="font-weight:700">Dnes 19:00 · Mastermind skupina</div>
-              <div class="small">Sdílení pokroku a peer feedback na nabídku.</div>
-            </div>
-          </div>
-
-          <div class="leader-row">
-            <div>
-              <div style="font-weight:700">Zítra · Live workshop: Pricing</div>
-              <div class="small">Jak určit cenu prvního produktu.</div>
-            </div>
-          </div>
-
-          <div class="leader-row">
-            <div>
-              <div style="font-weight:700">Pátek · Demo day checkpoint</div>
-              <div class="small">Prezentace mise a získaných insightů.</div>
-            </div>
-          </div>
+        <section class="panel" style="padding:16px;">
+          <h2 class="section-title" style="font-size:18px;">Proč komunita?</h2>
+          <p class="subtext">Sociální interakce, skupinová práce a peer podpora patří mezi prvky, které ve vzdělávání zvyšují zapojení a pomáhají s dokončováním online kurzů. V komunitě nezískáš jen informace, ale i motivaci a reálný feedback.</p>
         </section>
 
-        <section class="quiz-card">
-          <div class="section-head">
-            <div>
-              <h2 class="section-title" style="font-size:18px">Proč komunita?</h2>
-            </div>
-          </div>
-          <p class="subtext">
-            Sociální interakce, skupinová práce a peer podpora patří mezi prvky, které ve vzdělávání zvyšují zapojení a pomáhají s dokončováním online kurzů. V komunitě nezískáš jen informace, ale i motivaci a reálný feedback.
-          </p>
-
-          <a class="action primary-red" href="#">
-            Připojit se ke skupině
-          </a>
+        <section class="panel" style="padding:16px;">
+          <a class="action primary-red" href="assistant.html">Zeptat se AI na přípravu na event</a>
         </section>
       </main>
-    </div>
 
-    <nav class="bottom-nav" data-bottom-nav>
-      <a href="index.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 11l9-8 9 8"></path>
-          <path d="M5 10v10h14V10"></path>
-        </svg>
-        <span>Domů</span>
-      </a>
-      <a href="courses.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 6h16v12H4z"></path>
-          <path d="M8 6v12"></path>
-        </svg>
-        <span>Kurzy</span>
-      </a>
-      <a href="progress.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 19V5"></path>
-          <path d="M4 19h16"></path>
-          <path d="M8 15l3-3 3 2 6-7"></path>
-        </svg>
-        <span>Pokrok</span>
-      </a>
-      <a class="active" href="comunity.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.4 1.13V22a2 2 0 1 1-4 0v-.87a1.65 1.65 0 0 0-.4-1.13 1.65 1.65 0 0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06A2 2 0 1 1 3.1 16.1l.06-.06A1.65 1.65 0 0 0 4 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1.13-.4H2a2 2 0 1 1 0-4h.87a1.65 1.65 0 0 0 1.13-.4A1.65 1.65 0 0 0 5 8a1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.44 3.3l.06.06A1.65 1.65 0 0 0 9 4a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .4-1.13V2a2 2 0 1 1 4 0v.87a1.65 1.65 0 0 0 .4 1.13A1.65 1.65 0 0 0 16 4a1.65 1.65 0 0 0 1.82-.33l.06-.06A2 2 0 1 1 20.9 7.1l-.06.06A1.65 1.65 0 0 0 20 9c0 .39.14.77.4 1 .26.3.6.4 1 .4H22a2 2 0 1 1 0 4h-.87a1.65 1.65 0 0 0-1.13.4A1.65 1.65 0 0 0 19.4 15z"></path>
-        </svg>
-        <span>Komunita</span>
-      </a>
-      <a href="profile.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M17 11a4 4 0 1 0-8 0"></path>
-          <path d="M4 20a7 7 0 0 1 16 0"></path>
-          <path d="M20 8a3 3 0 1 1-6 0"></path>
-        </svg>
-        <span>Profil</span>
-      </a>
-    </nav>
+      <nav class="bottom-nav" data-bottom-nav>
+        <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Domů</span></a>
+        <a href="courses.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg><span>Kurzy</span></a>
+        <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"></path><path d="M10 19V9"></path><path d="M16 19v-4"></path><path d="M22 19V3"></path></svg><span>Pokrok</span></a>
+        <a href="assistant.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="6" y="8" width="12" height="10" rx="4"></rect><path d="M9 13h.01"></path><path d="M15 13h.01"></path><path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path></svg><span>AI</span></a>
+        <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg><span>Profil</span></a>
+      </nav>
+    </div>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
