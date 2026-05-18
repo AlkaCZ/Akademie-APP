@@ -3,78 +3,976 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akademie – Mise</title>
+  <title>Akademie · Ověř svůj nápad</title>
   <link rel="stylesheet" href="styles.css" />
+<style>
+  .lesson-page{
+    gap:14px;
+    padding:18px 16px 0;
+    align-content:start;
+  }
+
+  .lesson-hero{
+    padding:18px;
+    display:grid;
+    gap:14px;
+    position:relative;
+    overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,1)),
+      linear-gradient(135deg, #fff4f4, #ffffff 42%, #f6faff 100%);
+  }
+
+  .lesson-hero::before{
+    content:"";
+    position:absolute;
+    right:-28px;
+    bottom:-34px;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(217,2,6,.08), rgba(217,2,6,0));
+    pointer-events:none;
+  }
+
+  .lesson-kicker{
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#fff1f1;
+    border:1px solid #f5d3d5;
+    color:var(--accent-dark);
+    font-size:11px;
+    font-weight:800;
+  }
+
+  .lesson-head{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 88px;
+    gap:12px;
+    align-items:start;
+  }
+
+  .lesson-head h1{
+    margin:0;
+    font-size:24px;
+    line-height:1.08;
+    letter-spacing:-0.03em;
+  }
+
+  .lesson-head p{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  .lesson-score{
+    min-width:0;
+    padding:10px 10px;
+    border-radius:18px;
+    background:#fff;
+    border:1px solid var(--line);
+    text-align:center;
+    box-shadow:var(--shadow);
+  }
+
+  .lesson-score strong{
+    display:block;
+    font-size:20px;
+    line-height:1;
+    font-weight:800;
+    color:var(--accent-dark);
+  }
+
+  .lesson-score span{
+    display:block;
+    margin-top:4px;
+    font-size:10px;
+    color:var(--muted);
+    line-height:1.35;
+  }
+
+  .lesson-progress{
+    display:grid;
+    gap:8px;
+  }
+
+  .lesson-progress-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .lesson-progress-top strong{
+    color:var(--text);
+    font-size:13px;
+  }
+
+  .lesson-progress-bar{
+    height:10px;
+    border-radius:999px;
+    background:#edf3fa;
+    overflow:hidden;
+    border:1px solid #d8e5f1;
+  }
+
+  .lesson-progress-fill{
+    width:62%;
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--accent),#ff6b6e);
+    box-shadow:0 8px 18px rgba(217,2,6,.18);
+  }
+
+  .lesson-meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+
+  .lesson-meta .metric{
+    background:rgba(247,251,255,.96);
+    padding:12px;
+    border-radius:18px;
+  }
+
+  .lesson-meta .metric strong{
+    font-size:16px;
+  }
+
+  .lesson-meta .metric span{
+    font-size:11px;
+  }
+
+  .video-card,
+  .notes-card,
+  .quiz-live-card,
+  .outline-card{
+    padding:16px;
+    display:grid;
+    gap:12px;
+  }
+
+  .section-label{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+
+  .section-label h2{
+    margin:0;
+    font-size:17px;
+    line-height:1.2;
+  }
+
+  .mini-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 9px;
+    border-radius:999px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    font-size:10px;
+    color:var(--muted);
+    font-weight:700;
+    white-space:nowrap;
+  }
+
+  .video-preview{
+    position:relative;
+    aspect-ratio:16/9;
+    min-height:0;
+    border-radius:22px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at top left, rgba(255,255,255,.18), rgba(255,255,255,0) 38%),
+      linear-gradient(135deg,#17365f 0%, #0d6efd 58%, #8dc2ff 100%);
+    border:1px solid #bdd5ef;
+    padding:16px;
+    display:grid;
+    align-content:space-between;
+  }
+
+  .video-preview::before{
+    content:"";
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:54px;
+    height:54px;
+    border-radius:16px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.14);
+    transform:rotate(10deg);
+  }
+
+  .video-preview::after{
+    content:"";
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    width:64px;
+    height:64px;
+    border-radius:20px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    transform:rotate(-10deg);
+  }
+
+  .video-overlay{
+    position:relative;
+    z-index:1;
+    display:grid;
+    gap:10px;
+    color:#fff;
+    align-content:start;
+  }
+
+  .video-topline{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    font-size:10px;
+    opacity:.92;
+  }
+
+  .video-title{
+    max-width:none;
+  }
+
+  .video-title strong{
+    display:block;
+    font-size:20px;
+    line-height:1.08;
+    letter-spacing:-0.03em;
+    margin-bottom:5px;
+  }
+
+  .video-title span{
+    display:block;
+    font-size:12px;
+    line-height:1.5;
+    opacity:.92;
+    max-width:250px;
+  }
+
+  .video-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:6px;
+    padding-bottom:6px;
+  }
+
+  .play-button{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    border:none;
+    background:#fff;
+    color:#0d4e99;
+    display:grid;
+    place-items:center;
+    box-shadow:0 14px 28px rgba(12,28,58,.22);
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+
+  .play-button svg{
+    width:20px;
+    height:20px;
+    margin-left:2px;
+  }
+
+  .video-chip{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 10px;
+    border-radius:999px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.18);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    backdrop-filter:blur(10px);
+  }
+
+  .note-list{
+    display:grid;
+    gap:10px;
+  }
+
+  .note-item{
+    display:grid;
+    grid-template-columns:34px minmax(0,1fr);
+    gap:12px;
+    align-items:start;
+    padding:12px;
+    border-radius:18px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+  }
+
+  .note-badge{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(135deg,#ffe9ea,#ffd6d8);
+    color:var(--accent-dark);
+    font-size:12px;
+    font-weight:900;
+  }
+
+  .note-item strong{
+    display:block;
+    font-size:14px;
+    line-height:1.3;
+    margin-bottom:4px;
+  }
+
+  .note-item p{
+    margin:0;
+    font-size:13px;
+    line-height:1.55;
+    color:var(--muted);
+  }
+
+  .quiz-live-card{
+    background:linear-gradient(180deg,#fffefe 0%, #f8fbff 100%);
+  }
+
+  .quiz-points{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:18px;
+    background:#fff8e7;
+    border:1px solid #f2dfab;
+    color:#7b5a00;
+    font-size:13px;
+    font-weight:700;
+  }
+
+  .quiz-points strong{
+    color:#3b2b00;
+    font-size:18px;
+    line-height:1;
+  }
+
+  .question-box{
+    padding:14px;
+    border-radius:20px;
+    background:#fff;
+    border:1px solid var(--line);
+    display:grid;
+    gap:12px;
+  }
+
+  .question-box h3{
+    margin:0;
+    font-size:16px;
+    line-height:1.35;
+  }
+
+  .answers{
+    display:grid;
+    gap:10px;
+  }
+
+  .answer-option{
+    position:relative;
+  }
+
+  .answer-option input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .answer-ui{
+    display:grid;
+    grid-template-columns:22px minmax(0,1fr);
+    gap:12px;
+    align-items:start;
+    padding:13px 14px;
+    border-radius:18px;
+    border:1px solid var(--line);
+    background:var(--surface-2);
+    transition:border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
+    cursor:pointer;
+  }
+
+  .answer-dot{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    border:2px solid #b2c8de;
+    margin-top:1px;
+    position:relative;
+    background:#fff;
+  }
+
+  .answer-dot::after{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border-radius:50%;
+    background:transparent;
+    transition:background .18s ease;
+  }
+
+  .answer-ui strong{
+    display:block;
+    font-size:14px;
+    line-height:1.35;
+    margin-bottom:3px;
+  }
+
+  .answer-ui span{
+    display:block;
+    font-size:12px;
+    line-height:1.5;
+    color:var(--muted);
+  }
+
+  .answer-option input:checked + .answer-ui{
+    background:#eef6ff;
+    border-color:#9fc4ef;
+    box-shadow:0 12px 22px rgba(13,110,253,.10);
+    transform:translateY(-1px);
+  }
+
+  .answer-option input:checked + .answer-ui .answer-dot{
+    border-color:#0d6efd;
+  }
+
+  .answer-option input:checked + .answer-ui .answer-dot::after{
+    background:#0d6efd;
+  }
+
+  .quiz-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+
+  .quiz-result{
+    font-size:12px;
+    color:var(--muted);
+    min-height:18px;
+  }
+
+  .outline-list{
+    display:grid;
+    gap:10px;
+  }
+
+  .outline-step{
+    display:grid;
+    grid-template-columns:34px minmax(0,1fr) auto;
+    gap:12px;
+    align-items:center;
+    padding:12px;
+    border-radius:18px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+  }
+
+  .outline-step span{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    display:grid;
+    place-items:center;
+    background:#edf4fb;
+    color:#476280;
+    font-size:12px;
+    font-weight:900;
+    border:1px solid #d6e3f0;
+  }
+
+  .outline-step.active span{
+    background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+    color:#fff;
+    border-color:transparent;
+  }
+
+  .outline-step strong{
+    display:block;
+    font-size:14px;
+    line-height:1.3;
+  }
+
+  .outline-step small{
+    display:block;
+    margin-top:3px;
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.45;
+  }
+
+  .outline-step em{
+    font-style:normal;
+    font-size:11px;
+    font-weight:800;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+
+  .lesson-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .ghost-action{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    min-height:44px;
+    padding:0 16px;
+    border-radius:16px;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    font-size:13px;
+    font-weight:800;
+  }
+
+  .primary-wide{
+    min-height:46px;
+    border-radius:16px;
+  }
+
+  @media (max-width:480px){
+    .lesson-page{
+      gap:14px;
+      padding:16px 14px 0;
+    }
+
+    .lesson-hero{
+      padding:16px;
+      gap:12px;
+      border-radius:24px;
+    }
+
+    .lesson-hero::before{
+      width:84px;
+      height:84px;
+      right:-20px;
+      bottom:-22px;
+    }
+
+    .lesson-head{
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .lesson-head h1{
+      font-size:22px;
+    }
+
+    .lesson-head p{
+      font-size:13px;
+    }
+
+    .lesson-score{
+      width:100%;
+      max-width:132px;
+    }
+
+    .lesson-meta{
+      grid-template-columns:1fr;
+    }
+
+    .video-card,
+    .notes-card,
+    .quiz-live-card,
+    .outline-card{
+      padding:14px;
+    }
+
+    .video-preview{
+      padding:14px;
+      border-radius:20px;
+      min-height:190px;
+      align-content:space-between;
+    }
+
+    .video-preview::before{
+      width:40px;
+      height:40px;
+      top:12px;
+      right:12px;
+      border-radius:12px;
+    }
+
+    .video-preview::after{
+      width:48px;
+      height:48px;
+      left:12px;
+      bottom:12px;
+      border-radius:14px;
+    }
+
+    .video-title strong{
+      font-size:18px;
+    }
+
+    .video-title span{
+      font-size:11px;
+      max-width:none;
+    }
+
+    .video-actions{
+      margin-top:4px;
+      padding-bottom:10px;
+    }
+
+    .play-button{
+      width:48px;
+      height:48px;
+    }
+
+    .video-chip{
+      font-size:10px;
+      padding:6px 9px;
+    }
+
+    .lesson-actions{
+      grid-template-columns:1fr;
+    }
+
+    .outline-step{
+      grid-template-columns:34px minmax(0,1fr);
+    }
+
+    .outline-step em{
+      grid-column:2;
+    }
+  }
+</style>
 </head>
 <body>
   <div class="phone">
-    <div class="app">
+    <div class="app lesson-app">
       <header class="topbar">
         <div class="topbar-row">
           <div class="brand">
             <div class="brand-mark">A</div>
             <div class="brand-title">
               <strong>Akademie</strong>
-              <span>Praktická mise</span>
+              <span>Lekce · Ověř svůj nápad</span>
             </div>
           </div>
-
-          <a class="icon-btn assistant-btn" href="assistant.html" aria-label="AI asistent">
+          <a class="icon-btn" href="courses.html" aria-label="Zpět na kurzy">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3v3"></path>
-              <rect x="6" y="8" width="12" height="10" rx="4"></rect>
-              <path d="M9 13h.01"></path>
-              <path d="M15 13h.01"></path>
-              <path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path>
+              <path d="M15 18l-6-6 6-6"></path>
             </svg>
           </a>
         </div>
       </header>
 
-      <main class="content">
-        <section>
-          <h1 class="section-title">Mise: 5 rozhovorů se zákazníky</h1>
-          <p class="subtext">Krátká praktická mise pro ověření problému.</p>
-        </section>
+      <main class="content lesson-page">
+        <section class="panel video-card">
 
-        <section class="panel" style="padding:16px;">
-          <p class="subtext">Interaktivní onboarding a hands‑on úkoly ti pomáhají pochopit hodnotu aplikace rychleji než pasivní sledování videí.</p>
-        </section>
+          <span class="lesson-kicker">Cesta 01 · Ověř svůj nápad</span>
 
-        <section class="panel" style="padding:16px; display:grid; gap:12px;">
-          <h2 class="section-title" style="font-size:18px;">Kroky mise</h2>
+          <div class="lesson-head">
+            <div>
+              <h1>Jak poznat, že řešíš problém, který zákazníka opravdu pálí</h1>
+              <p>V téhle lekci si připravíš jednoduchý rámec pro ověření problému, pochopíš, co zjišťovat v rozhovorech, a odfiltruješ falešně pozitivní reakce.</p>
+            </div>
 
-          <div class="metric">
-            <strong>Připrav script rozhovoru</strong>
-            <span>Šablona otázek a jasné cíle hovoru.</span>
+            <div class="lesson-score">
+              <strong>+120</strong>
+              <span>bodů za dokončení</span>
+            </div>
           </div>
 
-          <div class="metric">
-            <strong>Nasbírej 5 odpovědí</strong>
-            <span>Zapiš bolest, motivaci a stávající řešení.</span>
+          <div class="lesson-progress">
+            <div class="lesson-progress-top">
+              <strong>Progress lekce</strong>
+              <span>62 % hotovo</span>
+            </div>
+            <div class="lesson-progress-bar">
+              <div class="lesson-progress-fill"></div>
+            </div>
           </div>
 
-          <div class="metric">
-            <strong>Sepsat 3 největší insighty</strong>
-            <span>Odevzdej mentorovi do pátku.</span>
+          <div class="lesson-meta">
+            <div class="metric">
+              <strong>12 min</strong>
+              <span>Délka videa a vysvětlení</span>
+            </div>
+            <div class="metric">
+              <strong>4 bloky</strong>
+              <span>Obsah v této lekci</span>
+            </div>
+            <div class="metric">
+              <strong>1 otázka</strong>
+              <span>Rychlé ověření porozumění</span>
+            </div>
+          </div>
+
+          <div class="section-label">
+            <h2>Náhled videa</h2>
+            <span class="mini-pill">Modul 1 · Lekce 3</span>
+          </div>
+
+          <div class="video-preview">
+            <div class="video-overlay">
+              <div class="video-topline">
+                <span>Video preview</span>
+                <span>12:04</span>
+              </div>
+
+              <div class="video-title">
+                <strong>Ověř svůj nápad na reálných rozhovorech</strong>
+              </div>
+
+              <div class="video-actions">
+                <button class="play-button" type="button" aria-label="Přehrát náhled videa">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 6v12l10-6z"></path>
+                  </svg>
+                </button>
+                <span class="video-chip">Start za 15 sekund</span>
+                <span class="video-chip">CZ titulky</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section class="panel" style="padding:16px;">
-          <a class="action primary-red" href="assistant.html">Požádat AI o pomoc s otázkami</a>
+        <section class="panel notes-card">
+          <div class="section-label">
+            <h2>Poznámky k lekci</h2>
+            <span class="mini-pill">To nejdůležitější</span>
+          </div>
+
+          <div class="note-list">
+            <div class="note-item">
+              <div class="note-badge">01</div>
+              <div>
+                <strong>Nezačínej řešením, ale problémem.</strong>
+                <p>V rozhovoru zjišťuj konkrétní situace, frekvenci problému a dopad na každodenní fungování zákazníka.</p>
+              </div>
+            </div>
+
+            <div class="note-item">
+              <div class="note-badge">02</div>
+              <div>
+                <strong>Ptej se na minulost, ne na hypotetickou budoucnost.</strong>
+                <p>„Jak jste to řešili naposledy?“ dá silnější odpověď než „Používali byste to?“.</p>
+              </div>
+            </div>
+
+            <div class="note-item">
+              <div class="note-badge">03</div>
+              <div>
+                <strong>Hledej opakující se vzorce.</strong>
+                <p>Když se stejná bolest objeví u více lidí, začínáš mít signál, že problém stojí za hlubší validaci.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel quiz-live-card">
+          <div class="section-label">
+            <h2>Rychlé ověření</h2>
+            <span class="mini-pill">Multiple choice</span>
+          </div>
+
+          <div class="quiz-points">
+            <span>Správná odpověď ti odemkne bonus za aktivitu</span>
+            <strong>+30 bodů</strong>
+          </div>
+
+          <div class="question-box">
+            <h3>Která otázka je nejlepší pro ověření, zda zákazník opravdu řeší konkrétní problém?</h3>
+
+            <div class="answers">
+              <label class="answer-option">
+                <input type="radio" name="missionQuiz" value="a" />
+                <span class="answer-ui">
+                  <span class="answer-dot"></span>
+                  <span>
+                    <strong>„Líbila by se vám aplikace, která tohle řeší?“</strong>
+                    <span>Ptá se na názor na řešení, ne na skutečné chování.</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="answer-option">
+                <input type="radio" name="missionQuiz" value="b" />
+                <span class="answer-ui">
+                  <span class="answer-dot"></span>
+                  <span>
+                    <strong>„Jak jste tento problém řešil naposledy?“</strong>
+                    <span>Míří na reálnou zkušenost, konkrétní situaci a současné workaroundy.</span>
+                  </span>
+                </span>
+              </label>
+
+              <label class="answer-option">
+                <input type="radio" name="missionQuiz" value="c" />
+                <span class="answer-ui">
+                  <span class="answer-dot"></span>
+                  <span>
+                    <strong>„Myslíte, že by o to měli zájem i ostatní?“</strong>
+                    <span>Je to spekulace a neověřuje vlastní bolest respondenta.</span>
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div class="quiz-footer">
+              <div id="quizResult" class="quiz-result">Vyber jednu odpověď a potvrď ji.</div>
+              <button id="checkAnswer" class="action primary-red primary-wide" type="button">Zkontrolovat odpověď</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel outline-card">
+          <div class="section-label">
+            <h2>Průchod lekcí</h2>
+            <span class="mini-pill">62 % splněno</span>
+          </div>
+
+          <div class="outline-list">
+            <div class="outline-step active">
+              <span>1</span>
+              <div>
+                <strong>Proč většina nápadů selže bez validace</strong>
+                <small>Krátký kontext a princip problem–solution fit.</small>
+              </div>
+              <em>Hotovo</em>
+            </div>
+
+            <div class="outline-step active">
+              <span>2</span>
+              <div>
+                <strong>Na co se ptát v customer interview</strong>
+                <small>Otázky zaměřené na chování, frekvenci a dopad problému.</small>
+              </div>
+              <em>Hotovo</em>
+            </div>
+
+            <div class="outline-step active">
+              <span>3</span>
+              <div>
+                <strong>Signály, že problém je dost silný</strong>
+                <small>Opakování, urgence a nevyhovující současné řešení.</small>
+              </div>
+              <em>Právě teď</em>
+            </div>
+
+            <div class="outline-step">
+              <span>4</span>
+              <div>
+                <strong>Mini kvíz a další krok</strong>
+                <small>Potvrzení porozumění a příprava na rozhovory.</small>
+              </div>
+              <em>Zbývá</em>
+            </div>
+          </div>
+
+          <div class="lesson-actions">
+            <a class="ghost-action" href="courses.html">Zpět na kurzy</a>
+            <a class="action primary-red primary-wide" href="progress.html">Pokračovat dál</a>
+          </div>
         </section>
       </main>
 
       <nav class="bottom-nav" data-bottom-nav>
-        <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Domů</span></a>
-        <a href="courses.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg><span>Kurzy</span></a>
-        <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"></path><path d="M10 19V9"></path><path d="M16 19v-4"></path><path d="M22 19V3"></path></svg><span>Pokrok</span></a>
-        <a href="assistant.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="6" y="8" width="12" height="10" rx="4"></rect><path d="M9 13h.01"></path><path d="M15 13h.01"></path><path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path></svg><span>AI</span></a>
-        <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg><span>Profil</span></a>
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 10.5L12 3l9 7.5"></path>
+            <path d="M5 9.5V21h14V9.5"></path>
+          </svg>
+          <span>Domů</span>
+        </a>
+        <a href="courses.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+            <path d="M8 8h8M8 12h8M8 16h5"></path>
+          </svg>
+          <span>Kurzy</span>
+        </a>
+        <a href="progress.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19V5"></path>
+            <path d="M10 19V9"></path>
+            <path d="M16 19v-4"></path>
+            <path d="M22 19V3"></path>
+          </svg>
+          <span>Pokrok</span>
+        </a>
+        <a href="assistant.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v3"></path>
+            <rect x="6" y="8" width="12" height="10" rx="4"></rect>
+            <path d="M9 13h.01"></path>
+            <path d="M15 13h.01"></path>
+            <path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path>
+          </svg>
+          <span>AI</span>
+        </a>
+        <a href="profile.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21a8 8 0 1 0-16 0"></path>
+            <circle cx="12" cy="8" r="4"></circle>
+          </svg>
+          <span>Profil</span>
+        </a>
       </nav>
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    const quizButton = document.querySelector('#checkAnswer');
+    const quizResult = document.querySelector('#quizResult');
+    const answers = document.querySelectorAll('input[name="missionQuiz"]');
+
+    if (quizButton && quizResult) {
+      quizButton.addEventListener('click', () => {
+        const selected = document.querySelector('input[name="missionQuiz"]:checked');
+
+        if (!selected) {
+          quizResult.textContent = 'Nejdřív vyber jednu odpověď.';
+          return;
+        }
+
+        if (selected.value === 'b') {
+          quizResult.textContent = 'Správně! Tahle otázka míří na reálné chování zákazníka a přináší nejsilnější validační signál. +30 bodů';
+        } else {
+          quizResult.textContent = 'Ještě ne. Zkus odpověď, která se ptá na konkrétní minulou zkušenost, ne na hypotetický názor.';
+        }
+      });
+
+      answers.forEach(input => {
+        input.addEventListener('change', () => {
+          quizResult.textContent = 'Odpověď vybraná. Teď ji potvrď.';
+        });
+      });
+    }
+  </script>
 </body>
 </html>
