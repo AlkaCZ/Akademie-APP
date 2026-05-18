@@ -3,19 +3,467 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akademie – Pokrok</title>
+  <title>Pokrok · Tvůj pokrok v podnikání</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .progress-view{
+      gap:16px;
+      padding-top:16px;
+      padding-bottom:18px;
+    }
+
+    .progress-topbar{
+      padding:10px 16px 12px;
+    }
+
+    .progress-topbar .topbar-row{
+      align-items:center;
+    }
+
+    .progress-topbar .brand{
+      align-items:center;
+    }
+
+    .progress-topbar .brand-mark{
+      width:36px;
+      height:36px;
+      border-radius:12px;
+      font-size:14px;
+    }
+
+    .progress-topbar .brand-title strong{
+      font-size:15px;
+      line-height:1.1;
+    }
+
+    .progress-topbar .brand-title span{
+      font-size:11px;
+      margin-top:3px;
+    }
+
+    .progress-shell{
+      display:grid;
+      gap:16px;
+      padding:0 16px;
+    }
+
+    .progress-overview{
+      padding:18px;
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,1)),
+        linear-gradient(135deg, #eef6ff 0%, #ffffff 42%, #fff4f4 100%);
+      display:grid;
+      gap:16px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .progress-overview::before{
+      content:"";
+      position:absolute;
+      inset:auto -36px -62px auto;
+      width:150px;
+      height:150px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(13,110,253,.10), rgba(13,110,253,0));
+      pointer-events:none;
+    }
+
+    .progress-overview-head{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:start;
+      position:relative;
+      z-index:1;
+    }
+
+    .progress-overview-head h1{
+      margin:6px 0 0;
+      font-size:28px;
+      line-height:1.05;
+      letter-spacing:-0.03em;
+    }
+
+    .progress-overview-head p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .progress-status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:7px 11px;
+      border-radius:999px;
+      background:#e8f2ff;
+      border:1px solid #cfe0f6;
+      color:#1455a3;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .progress-status::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#0d6efd;
+      box-shadow:0 0 0 4px rgba(13,110,253,.12);
+    }
+
+    .progress-medal{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#fff7d6,#ffe69c);
+      color:#916300;
+      border:1px solid #f2dfa3;
+      box-shadow:var(--shadow);
+      font-size:22px;
+    }
+
+    .progress-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .progress-stats .stat{
+      background:var(--surface-2);
+      min-height:86px;
+    }
+
+    .progress-stats .stat strong{
+      font-size:22px;
+    }
+
+    .progress-stats .stat span{
+      font-size:11px;
+    }
+
+    .weeks-card{
+      padding:18px;
+      display:grid;
+      gap:14px;
+    }
+
+    .weeks-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .weeks-head h2{
+      margin:0;
+      font-size:18px;
+      line-height:1.15;
+    }
+
+    .weeks-head p{
+      margin:6px 0 0;
+      font-size:13px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    .weeks-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:54px;
+      height:36px;
+      padding:0 12px;
+      border-radius:14px;
+      background:#eef5ff;
+      border:1px solid #d6e5f7;
+      color:#1455a3;
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .weeks-track{
+      display:grid;
+      grid-template-columns:repeat(6, 1fr);
+      gap:8px;
+      align-items:center;
+    }
+
+    .week-step{
+      display:grid;
+      gap:8px;
+      justify-items:center;
+      min-width:0;
+    }
+
+    .week-dot{
+      width:100%;
+      height:10px;
+      border-radius:999px;
+      background:#e4ebf4;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .week-dot::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:999px;
+      background:linear-gradient(90deg,#0d6efd 0%, #6aa9ff 100%);
+      opacity:0;
+    }
+
+    .week-step.done .week-dot::after{
+      opacity:1;
+    }
+
+    .week-step.current .week-dot{
+      background:#dfeafe;
+      box-shadow:inset 0 0 0 1px #bfd6fb;
+    }
+
+    .week-step.current .week-dot::after{
+      width:58%;
+      opacity:1;
+    }
+
+    .week-step span{
+      font-size:10px;
+      color:var(--muted);
+      font-weight:700;
+      text-align:center;
+      line-height:1.2;
+    }
+
+    .current-course{
+      padding:18px;
+      display:grid;
+      gap:14px;
+    }
+
+    .course-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .course-head h2{
+      margin:0;
+      font-size:18px;
+      line-height:1.15;
+    }
+
+    .course-head p{
+      margin:6px 0 0;
+      font-size:13px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    .course-inline{
+      display:grid;
+      gap:14px;
+      padding:14px;
+      border-radius:24px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+    }
+
+    .course-inline-top{
+      display:grid;
+      grid-template-columns:84px minmax(0,1fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .course-inline-visual{
+      width:84px;
+      height:84px;
+      border-radius:20px;
+      background:linear-gradient(180deg,#f8fbff 0%, #eef5fc 100%);
+      border:1px solid #dbe7f3;
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+
+    .course-inline-visual::before{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border-radius:16px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(255,255,255,.8);
+    }
+
+    .course-inline-visual img{
+      position:relative;
+      z-index:1;
+      width:50px;
+      height:50px;
+      object-fit:contain;
+    }
+
+    .course-inline-main{
+      display:grid;
+      gap:8px;
+      min-width:0;
+      align-content:start;
+    }
+
+    .course-inline-main h3{
+      margin:0;
+      font-size:16px;
+      line-height:1.15;
+      font-weight:800;
+    }
+
+    .course-inline-main p{
+      margin:0;
+      font-size:13px;
+      line-height:1.45;
+      color:var(--muted);
+    }
+
+    .course-inline-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+    }
+
+    .course-progress{
+      display:grid;
+      gap:8px;
+    }
+
+    .course-progress-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .course-progress-bar{
+      height:10px;
+      border-radius:999px;
+      background:#e4ebf4;
+      overflow:hidden;
+    }
+
+    .course-progress-bar span{
+      display:block;
+      width:62%;
+      height:100%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--accent) 0%, #ff6c70 100%);
+    }
+
+    .course-next-step{
+      display:grid;
+      gap:2px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .course-next-step strong{
+      font-size:14px;
+      line-height:1.25;
+      color:var(--text);
+    }
+
+    .current-course .course-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:0;
+    }
+
+    .current-course .course-row .badge{
+      flex:0 0 auto;
+    }
+
+    .progress-next{
+      padding:18px;
+      display:grid;
+      gap:10px;
+    }
+
+    .progress-next h2{
+      margin:0;
+      font-size:18px;
+      line-height:1.15;
+    }
+
+    .progress-next p{
+      margin:0;
+      font-size:14px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .progress-next .action{
+      width:max-content;
+    }
+
+    @media (max-width: 360px){
+      .progress-stats{
+        grid-template-columns:1fr;
+      }
+
+      .weeks-track{
+        grid-template-columns:repeat(3,1fr);
+        row-gap:12px;
+      }
+
+      .course-inline-top{
+        grid-template-columns:1fr;
+      }
+
+      .course-inline-visual{
+        width:84px;
+        height:84px;
+      }
+
+      .current-course .course-row{
+        align-items:stretch;
+      }
+
+      .current-course .course-row .action,
+      .progress-next .action{
+        width:100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="phone">
     <div class="app">
-      <header class="topbar">
+      <header class="topbar progress-topbar">
         <div class="topbar-row">
           <div class="brand">
             <div class="brand-mark">A</div>
             <div class="brand-title">
-              <strong>Akademie</strong>
-              <span>Pokrok a další doporučení</span>
+              <strong>Pokrok</strong>
+              <span>Tvůj pokrok v podnikání</span>
             </div>
           </div>
 
@@ -31,60 +479,159 @@
         </div>
       </header>
 
-      <main class="content">
-        <section>
-          <h1 class="section-title">Pokrok v Akademii</h1>
-          <p class="subtext">Vidíš, kde už máš sílu a kde je prostor přidat.</p>
-        </section>
+      <main class="content progress-view">
+        <div class="progress-shell">
+          <section class="hero-card progress-overview">
+            <div class="progress-overview-head">
+              <div>
+                <span class="progress-status">Aktivní cesta</span>
+                <h1>Držíš tempo.</h1>
+                <p>Pokračuješ v rozpracovaném kurzu a sbíráš body za pravidelný postup každý týden.</p>
+              </div>
+              <div class="progress-medal" aria-hidden="true">🏆</div>
+            </div>
 
-        <section class="stats">
-          <div class="stat">
-            <strong>82 %</strong>
-            <span>Validace trhu</span>
-          </div>
-          <div class="stat">
-            <strong>54 %</strong>
-            <span>Nabídka</span>
-          </div>
-          <div class="stat">
-            <strong>31 %</strong>
-            <span>Finance</span>
-          </div>
-        </section>
+            <div class="progress-stats stats">
+              <article class="stat">
+                <strong>176</strong>
+                <span>Body</span>
+              </article>
+              <article class="stat">
+                <strong>50</strong>
+                <span>Level</span>
+              </article>
+              <article class="stat">
+                <strong>4</strong>
+                <span>Týdny v řadě</span>
+              </article>
+            </div>
+          </section>
 
-        <section class="panel" style="padding:16px;">
-          <div class="stat">
-            <strong>21 %</strong>
-            <span>Marketing</span>
-          </div>
-        </section>
+          <section class="panel weeks-card">
+            <div class="weeks-head">
+              <div>
+                <h2>Týdenní progress</h2>
+                <p>Čím víc týdnů držíš rytmus, tím dál se posouvá ukazatel postupu.</p>
+              </div>
+              <div class="weeks-badge">4 / 6</div>
+            </div>
 
-        <section class="panel" style="padding:16px; display:grid; gap:12px;">
-          <h2 class="section-title" style="font-size:18px;">Poslední feedback</h2>
+            <div class="weeks-track" aria-label="Postup po týdnech">
+              <div class="week-step done">
+                <div class="week-dot"></div>
+                <span>Týden 1</span>
+              </div>
+              <div class="week-step done">
+                <div class="week-dot"></div>
+                <span>Týden 2</span>
+              </div>
+              <div class="week-step done">
+                <div class="week-dot"></div>
+                <span>Týden 3</span>
+              </div>
+              <div class="week-step current">
+                <div class="week-dot"></div>
+                <span>Týden 4</span>
+              </div>
+              <div class="week-step">
+                <div class="week-dot"></div>
+                <span>Týden 5</span>
+              </div>
+              <div class="week-step">
+                <div class="week-dot"></div>
+                <span>Týden 6</span>
+              </div>
+            </div>
+          </section>
 
-          <div class="metric">
-            <strong>Mentor · Zúžit ICP</strong>
-            <span>Mluv nejprve s jedním konkrétním segmentem místo širokého publika.</span>
-          </div>
+          <section class="panel current-course" data-course-id="idea">
+            <div class="course-head">
+              <div>
+                <h2>Rozpracovaný kurz</h2>
+                <p>Aktivní kurz navazuje na tvoji aktuální podnikatelskou cestu v aplikaci.</p>
+              </div>
+              <span class="badge green">Aktivní</span>
+            </div>
 
-          <div class="metric">
-            <strong>Systém · Další doporučený krok</strong>
-            <span>Dokonči lekci o formulaci value proposition.</span>
-          </div>
-        </section>
+            <article class="course-inline">
+              <div class="course-inline-top">
+                <div class="course-inline-visual course-visual"></div>
 
-        <section class="panel" style="padding:16px;">
-          <h2 class="section-title" style="font-size:18px;">Proč mít progress view?</h2>
-          <p class="subtext">Přehled pokroku ti pomáhá chápat, kde jsi, co už zvládl a co má následovat dál. Podle toho si můžeš lépe plánovat čas a volit další misi.</p>
-        </section>
+                <div class="course-inline-main">
+                  <h3>Cesta 01 · Ověř svůj nápad</h3>
+                  <p>Hypotézy, customer interviews a problém–řešení fit.</p>
+
+                  <div class="course-inline-meta">
+                    <span class="badge">Rozpracováno</span>
+                    <span class="badge gold">Cesta 01</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="course-progress">
+                <div class="course-progress-top">
+                  <span>Progress kurzu</span>
+                  <span>62 %</span>
+                </div>
+                <div class="course-progress-bar" aria-hidden="true">
+                  <span></span>
+                </div>
+              </div>
+
+              <div class="course-next-step">
+                <span>Další krok:</span>
+                <strong>Customer interviews</strong>
+              </div>
+
+              <div class="course-row">
+                <span class="badge red">Aktivní lekce</span>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel progress-next">
+            <h2>Co tě posune dál</h2>
+            <p>Dokonči další lekci v kurzu Ověř svůj nápad a streak se posune do dalšího týdne spolu s celkovým postupem.</p>
+            <a href="mission.html" class="action primary-red">Otevřít další misi</a>
+          </section>
+        </div>
       </main>
 
       <nav class="bottom-nav" data-bottom-nav>
-        <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Domů</span></a>
-        <a href="courses.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg><span>Kurzy</span></a>
-        <a href="progress.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"></path><path d="M10 19V9"></path><path d="M16 19v-4"></path><path d="M22 19V3"></path></svg><span>Pokrok</span></a>
-        <a href="assistant.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="6" y="8" width="12" height="10" rx="4"></rect><path d="M9 13h.01"></path><path d="M15 13h.01"></path><path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path></svg><span>AI</span></a>
-        <a href="profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg><span>Profil</span></a>
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 11.5L12 5l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5h-5v5H5a1 1 0 0 1-1-1v-7.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span>Domů</span>
+        </a>
+        <a href="mission.html">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 5.5h12M6 12h12M6 18.5h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Mise</span>
+        </a>
+        <a href="progress.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 18V9m7 9V5m7 13v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Pokrok</span>
+        </a>
+<a href="assistant.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v3"></path>
+            <rect x="6" y="8" width="12" height="10" rx="4"></rect>
+            <path d="M9 13h.01"></path>
+            <path d="M15 13h.01"></path>
+            <path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path>
+          </svg>
+          <span>AI</span>
+        </a>
+        <a href="profile.html">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm-6 7a6 6 0 0 1 12 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Profil</span>
+        </a>
       </nav>
     </div>
   </div>
