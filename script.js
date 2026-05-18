@@ -1,21 +1,49 @@
 const courseThumbnails = {
   idea: {
-    src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/5c6ba9c3603ab699acdd9e57ab1dfeffaf36ae04.jpg',
-    alt: 'Ilustrace start-up rakety a notebooku pro kurz ověření nápadu'
+    src: 'assets/idea.png',
+    alt: 'Ikona nápadu a žárovky - kurz Ověř svůj nápad'
   },
   offer: {
-    src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/ef2207c9c5ebaedeb824583fd776e9764083e5f7.jpg',
-    alt: 'Ilustrace business strategie a plánování nabídky'
+    src: 'assets/proposal.png',
+    alt: 'Ikona business strategie - kurz Vyladění nabídky'
   },
   marketing: {
-    src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/114a6e3a86899626e0d747cc3bf47bfec89a83a9.jpg',
-    alt: 'Ilustrace marketingového dashboardu a růstu kampaní'
+    src: 'assets/social-media.png',
+    alt: 'Ikona marketingového grafu - kurz Marketing & growth'
   },
   finance: {
-    src: 'https://pplx-res.cloudinary.com/image/upload/t_thumbnail_512_smart/pplx_search_images/9f2f9ef6a2d0e7a4cf13c6f7e9f7f2a16e9a0c1b.jpg',
-    alt: 'Ilustrace financí, grafů a cenotvorby'
+    src: 'assets/budget.png',
+    alt: 'Ikona finanční analýzy - kurz Finance & pricing'
   }
 };
+
+const courseActions = {
+  idea: { label: 'Pokračovat', href: 'mission.html', className: 'primary-red' },
+  offer: { label: 'Začít kurz', href: 'mission.html', className: '' },
+  marketing: { label: 'Začít kurz', href: 'mission.html', className: '' },
+  finance: { label: 'Začít kurz', href: 'mission.html', className: '' }
+};
+
+function enhanceCourseActions() {
+  document.querySelectorAll('[data-course-id]').forEach(card => {
+    const id = card.getAttribute('data-course-id');
+    const row = card.querySelector('.course-row');
+    const badge = row ? row.querySelector('.badge') : null;
+    const cfg = courseActions[id];
+
+    if (!row || !badge || !cfg) return;
+
+    row.innerHTML = '';
+    row.appendChild(badge);
+
+    const link = document.createElement('a');
+    link.href = cfg.href;
+    link.className = `action course-open ${cfg.className}`.trim();
+    link.textContent = cfg.label;
+
+    row.appendChild(link);
+  });
+}
 
 function enhanceCourses() {
   document.querySelectorAll('[data-course-id]').forEach(card => {
@@ -30,6 +58,7 @@ function enhanceCourses() {
     img.loading = 'lazy';
     img.width = 340;
     img.height = 191;
+    img.className = 'course-icon';
 
     visual.innerHTML = '';
     visual.appendChild(img);
@@ -99,6 +128,7 @@ function setupAssistantChips() {
 
 document.addEventListener('DOMContentLoaded', () => {
   enhanceCourses();
+  enhanceCourseActions();
   setupSearch();
   setupBottomNav();
   setupHeroPulse();
