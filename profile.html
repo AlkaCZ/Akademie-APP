@@ -3,8 +3,582 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Akademie – Profil</title>
+  <title>Akademie · Profil</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .profile-rework{
+      gap:18px;
+      padding:22px 16px 0;
+      align-content:start;
+    }
+
+    .profile-hero{
+      padding:20px;
+      padding-top:84px;
+      gap:16px;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,1)),
+        linear-gradient(135deg, #fff4f4, #ffffff 42%, #f6faff 100%);
+    }
+
+    .profile-hero::before{
+      content:"";
+      position:absolute;
+      right:-34px;
+      bottom:-54px;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(217,2,6,.10), rgba(217,2,6,0));
+      pointer-events:none;
+    }
+
+    .profile-badge{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      max-width:calc(100% - 12px);
+      padding:8px 12px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#fff1f1,#ffe7e9);
+      border:1px solid #f1cfd3;
+      color:var(--accent-dark);
+      font-size:12px;
+      font-weight:800;
+      line-height:1.2;
+      position:relative;
+      z-index:3;
+      box-shadow:0 10px 20px rgba(217,2,6,.08);
+    }
+
+    .profile-hero-main{
+      display:block;
+      position:relative;
+      min-height:74px;
+    }
+
+    .profile-hero-avatar{
+      position:absolute;
+      top:-64px;
+      left:0;
+      width:78px;
+      height:78px;
+      border-radius:24px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#dfeeff,#b9d7ff);
+      color:#0b4fa1;
+      font-size:24px;
+      font-weight:900;
+      border:1px solid #cfe0f3;
+      box-shadow:var(--shadow);
+      z-index:2;
+    }
+
+    .profile-hero-copy{
+      min-width:0;
+      position:relative;
+      z-index:1;
+    }
+
+    .profile-hero-copy h1{
+      margin:0;
+      font-size:28px;
+      line-height:1.05;
+      letter-spacing:-0.03em;
+    }
+
+    .profile-hero-copy p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+
+    .profile-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .profile-tag{
+      display:inline-flex;
+      align-items:center;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--text);
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .profile-stats-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+
+    .profile-stat{
+      background:rgba(247,251,255,.96);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:14px;
+    }
+
+    .profile-stat strong{
+      display:block;
+      font-size:18px;
+      line-height:1.1;
+      margin-bottom:4px;
+    }
+
+    .profile-stat span{
+      display:block;
+      font-size:11px;
+      line-height:1.45;
+      color:var(--muted);
+    }
+
+    .profile-focus{
+      padding:18px;
+      display:grid;
+      gap:14px;
+    }
+
+    .profile-focus-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .profile-focus-top h2{
+      margin:0;
+      font-size:22px;
+      line-height:1.1;
+    }
+
+    .profile-focus-time{
+      flex:0 0 auto;
+      padding:8px 10px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-size:12px;
+      font-weight:800;
+      color:var(--text);
+    }
+
+    .profile-focus p{
+      margin:0;
+      font-size:14px;
+      line-height:1.6;
+      color:var(--text);
+    }
+
+    .profile-focus-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .profile-mini{
+      padding:16px;
+      display:grid;
+      gap:12px;
+    }
+
+    .profile-mini h3{
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
+    }
+
+    .profile-mini p{
+      margin:0;
+      font-size:13px;
+      line-height:1.55;
+      color:var(--muted);
+    }
+
+    .profile-section{
+      padding:18px;
+      display:grid;
+      gap:14px;
+    }
+
+    .profile-section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .profile-section-head h2{
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
+    }
+
+    .profile-section-head span{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .goal-list,
+    .setting-list,
+    .preference-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .goal-item,
+    .setting-item{
+      display:grid;
+      grid-template-columns:46px minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      padding:14px;
+      border-radius:22px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+    }
+
+    .goal-icon,
+    .setting-icon{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#ffe9ea,#ffd7d9);
+      color:var(--accent-dark);
+      font-size:13px;
+      font-weight:900;
+      flex:0 0 auto;
+    }
+
+    .goal-item strong,
+    .setting-item strong{
+      display:block;
+      font-size:15px;
+      line-height:1.3;
+      margin-bottom:4px;
+    }
+
+    .goal-item small,
+    .setting-item small{
+      display:block;
+      font-size:12px;
+      line-height:1.45;
+      color:var(--muted);
+    }
+
+    .goal-status{
+      white-space:nowrap;
+      font-size:11px;
+      font-weight:800;
+      color:var(--muted);
+    }
+
+    .switch-wrap{
+      display:grid;
+      justify-items:end;
+      gap:8px;
+    }
+
+    .switch{
+      position:relative;
+      width:52px;
+      height:32px;
+      display:inline-block;
+      flex:0 0 auto;
+    }
+
+    .switch input{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      cursor:pointer;
+    }
+
+    .switch-ui{
+      width:100%;
+      height:100%;
+      border-radius:999px;
+      background:#dbe6f1;
+      border:1px solid #c7d7e8;
+      transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      position:relative;
+    }
+
+    .switch-ui::after{
+      content:"";
+      position:absolute;
+      top:3px;
+      left:3px;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:#fff;
+      box-shadow:0 4px 10px rgba(19,34,56,.14);
+      transition:transform .2s ease;
+    }
+
+    .switch input:checked + .switch-ui{
+      background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+      border-color:transparent;
+      box-shadow:0 10px 18px rgba(169,1,5,.18);
+    }
+
+    .switch input:checked + .switch-ui::after{
+      transform:translateX(20px);
+    }
+
+    .switch-state{
+      position:absolute;
+      top:38px;
+      left:50%;
+      transform:translateX(-50%);
+      min-width:48px;
+      min-height:24px;
+      padding:0 8px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.04em;
+      border:1px solid var(--line);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:opacity .18s ease, transform .18s ease;
+      pointer-events:none;
+    }
+
+    .switch-state-on{
+      background:#fff1f1;
+      border-color:#f2cfd2;
+      color:var(--accent-dark);
+      opacity:0;
+    }
+
+    .switch-state-off{
+      background:#eef3f8;
+      border-color:#d7e2ec;
+      color:#607286;
+      opacity:1;
+    }
+
+    .switch input:checked ~ .switch-state-on{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .switch input:checked ~ .switch-state-off{
+      opacity:0;
+      transform:translateX(-50%) translateY(-2px);
+    }
+
+    .switch input:not(:checked) ~ .switch-state-on{
+      opacity:0;
+      transform:translateX(-50%) translateY(-2px);
+    }
+
+    .switch input:not(:checked) ~ .switch-state-off{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    .preference-row{
+      padding:14px;
+      border-radius:22px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      display:grid;
+      gap:12px;
+    }
+
+    .preference-row h3{
+      margin:0;
+      font-size:15px;
+      line-height:1.3;
+    }
+
+    .preference-row p{
+      margin:0;
+      font-size:12px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    .chip-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .pref-chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:36px;
+      padding:0 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .pref-chip.active{
+      background:var(--blue-soft);
+      border-color:#bfd6f4;
+      color:#1455a3;
+    }
+
+    .pref-chip.red{
+      background:#fff1f1;
+      border-color:#f2cfd2;
+      color:var(--accent-dark);
+    }
+
+    .account-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .account-box{
+      padding:14px;
+      border-radius:20px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+    }
+
+    .account-box strong{
+      display:block;
+      font-size:14px;
+      line-height:1.3;
+      margin-bottom:4px;
+    }
+
+    .account-box span{
+      display:block;
+      font-size:12px;
+      line-height:1.45;
+      color:var(--muted);
+    }
+
+    .profile-actions{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+
+    .ghost-action{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      min-height:44px;
+      padding:0 16px;
+      border-radius:16px;
+      background:var(--surface-2);
+      border:1px solid var(--line);
+      color:var(--text);
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .profile-note{
+      font-size:12px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    @media (max-width:480px){
+      .profile-rework{
+        gap:16px;
+        padding:18px 14px 0;
+      }
+
+      .profile-hero{
+        padding:18px;
+        padding-top:76px;
+        border-radius:26px;
+      }
+
+      .profile-hero::before{
+        width:120px;
+        height:120px;
+        right:-26px;
+        bottom:-42px;
+      }
+
+      .profile-badge{
+        font-size:11px;
+        padding:7px 10px;
+        max-width:100%;
+      }
+
+      .profile-hero-main{
+        min-height:60px;
+      }
+
+      .profile-hero-avatar{
+        top:-58px;
+        width:64px;
+        height:64px;
+        border-radius:20px;
+        font-size:20px;
+      }
+
+      .profile-hero-copy h1{
+        font-size:24px;
+      }
+
+      .profile-hero-copy p{
+        font-size:13px;
+      }
+
+      .profile-stats-grid,
+      .profile-focus-grid,
+      .account-grid,
+      .profile-actions{
+        grid-template-columns:1fr;
+      }
+
+      .profile-focus-top{
+        flex-direction:column;
+      }
+
+      .profile-focus-time{
+        align-self:flex-start;
+      }
+
+      .goal-item,
+      .setting-item{
+        grid-template-columns:46px minmax(0,1fr);
+        align-items:start;
+      }
+
+      .goal-status,
+      .switch-wrap{
+        grid-column:2;
+      }
+
+      .switch-wrap{
+        justify-items:start;
+        margin-top:4px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="phone">
@@ -15,11 +589,11 @@
             <div class="brand-mark">A</div>
             <div class="brand-title">
               <strong>Akademie</strong>
-              <span>Tvůj profil</span>
+              <span>Profil · Nastavení a preference</span>
             </div>
           </div>
 
-          <a class="icon-btn assistant-btn" href="assistant.html" aria-label="AI asistent">
+          <a class="icon-btn assistant-btn" href="assistant.html" aria-label="Otevřít asistenta">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 3v3"></path>
               <rect x="6" y="8" width="12" height="10" rx="4"></rect>
@@ -31,71 +605,258 @@
         </div>
       </header>
 
-      <main class="content">
-        <section class="panel" style="padding:16px; display:grid; gap:12px;">
+      <main class="content profile-rework">
+        <section class="panel profile-focus">
+          <span class="profile-badge">Zakladatelka - Cesta 01 · Ověř svůj nápad</span>
 
-          <div class="profile-header">
-            <div class="avatar">EK</div>
-            <div>
-              <h1 class="profile-name">Eva K.</h1>
-              <p class="profile-sub">Zakladatelka projektu EcoBox</p>
+          <div class="profile-hero-main">
+            <div class="profile-hero-copy">
+                 
+              <h1>Eva K.</h1>
+              <p>Zakladatelka projektu EcoBox. Pracuješ na ověření problému, přípravě nabídky a prvním platícím zákazníkovi.</p>
+
+              <div class="profile-tags">
+                <span class="profile-tag">Projekt · EcoBox</span>
+                <span class="profile-tag">Horizont · 30 dní</span>
+                <span class="profile-tag">AI asistent · připraven</span>
+              </div>
             </div>
           </div>
 
-          <div class="stats profile-stats">
-            <div class="stat">
+          <div class="profile-stats-grid">
+            <div class="profile-stat">
               <strong>30 dní</strong>
               <span>Horizont pro 1. zákazníka</span>
             </div>
-            <div class="stat">
+
+            <div class="profile-stat">
               <strong>5</strong>
               <span>Plánovaných rozhovorů</span>
             </div>
-            <div class="stat">
-              <strong>AI</strong>
-              <span>Asistent připraven</span>
+
+            <div class="profile-stat">
+              <strong>62 %</strong>
+              <span>Dokončená aktuální lekce</span>
             </div>
-          </div>
-
-          <h2 class="section-title" style="font-size:18px;">Moje cíle</h2>
-
-          <div class="metric">
-            <strong>Získat prvního platícího zákazníka</strong>
-            <span>Horizont 30 dní.</span>
-          </div>
-
-          <div class="metric">
-            <strong>Dokončit Lean Canvas</strong>
-            <span>Cíl na tento týden.</span>
-          </div>
-
-          <div class="metric">
-            <strong>Absolvovat 5 customer interviews</strong>
-            <span>Aktivní mise.</span>
           </div>
         </section>
 
-        <section class="panel" style="padding:16px; display:grid; gap:12px;">
-          <h2 class="section-title" style="font-size:18px;">Nastavení aplikace</h2>
-
-          <div class="metric">
-            <strong>Notifikace</strong>
-            <span>Denní připomínka v 18:00 · Zapnuto.</span>
+        <section class="panel profile-section">
+          <div class="profile-section-head">
+            <h2>Moje cíle</h2>
+            <span>Hlavní směry postupu</span>
           </div>
 
-          <div class="metric">
-            <strong>Mentoring</strong>
-            <span>1× týdně office hours · Aktivní.</span>
+          <div class="goal-list">
+            <div class="goal-item">
+              <div class="goal-icon">01</div>
+              <div>
+                <strong>Získat prvního platícího zákazníka</strong>
+                <small>Hlavní cíl s horizontem 30 dní a jasným zaměřením na validaci trhu.</small>
+              </div>
+              <div class="goal-status">Aktivní</div>
+            </div>
+
+            <div class="goal-item">
+              <div class="goal-icon">02</div>
+              <div>
+                <strong>Dokončit Lean Canvas</strong>
+                <small>Cíl na tento týden, který pomůže zpřesnit problém, segment i nabídku.</small>
+              </div>
+              <div class="goal-status">Tento týden</div>
+            </div>
+
+            <div class="goal-item">
+              <div class="goal-icon">03</div>
+              <div>
+                <strong>Absolvovat 5 customer interviews</strong>
+                <small>Aktivní mise pro validaci problému a sběr reálného feedbacku.</small>
+              </div>
+              <div class="goal-status">Rozpracováno</div>
+            </div>
           </div>
+        </section>
+
+        <section class="panel profile-section">
+          <div class="profile-section-head">
+            <h2>Nastavení aplikace</h2>
+            <span>Notifikace a způsob práce</span>
+          </div>
+
+          <div class="setting-list">
+            <div class="setting-item">
+              <div class="setting-icon">🔔</div>
+              <div>
+                <strong>Denní připomínka</strong>
+                <small>Denní připomínka v 18:00 pro udržení konzistence v práci na projektu.</small>
+              </div>
+              <label class="switch-wrap" aria-label="Denní připomínka">
+                <span class="switch">
+                  <input type="checkbox" checked />
+                  <span class="switch-ui"></span>
+                  <span class="switch-state switch-state-on">ON</span>
+                  <span class="switch-state switch-state-off">OFF</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-icon">📅</div>
+              <div>
+                <strong>Mentoring a office hours</strong>
+                <small>1× týdně office hours a pravidelný kontakt pro další posun v validaci.</small>
+              </div>
+              <label class="switch-wrap" aria-label="Mentoring a office hours">
+                <span class="switch">
+                  <input type="checkbox" checked />
+                  <span class="switch-ui"></span>
+                  <span class="switch-state switch-state-on">ON</span>
+                  <span class="switch-state switch-state-off">OFF</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-icon">⚡</div>
+              <div>
+                <strong>Rychlé připomenutí mise</strong>
+                <small>Po otevření aplikace se zobrazí hlavní úkol dne a další doporučený krok.</small>
+              </div>
+              <label class="switch-wrap" aria-label="Rychlé připomenutí mise">
+                <span class="switch">
+                  <input type="checkbox" />
+                  <span class="switch-ui"></span>
+                  <span class="switch-state switch-state-on">ON</span>
+                  <span class="switch-state switch-state-off">OFF</span>
+                </span>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel profile-section">
+          <div class="profile-section-head">
+            <h2>Preference studia</h2>
+            <span>Jak má aplikace fungovat pro tebe</span>
+          </div>
+
+          <div class="preference-list">
+            <div class="preference-row">
+              <div>
+                <h3>Tempo programu</h3>
+                <p>Vyber styl, podle kterého ti aplikace bude prioritizovat mise, obsah a připomínky.</p>
+              </div>
+              <div class="chip-row">
+                <button class="pref-chip">Volnější</button>
+                <button class="pref-chip active">Vyvážené</button>
+                <button class="pref-chip">Intenzivní</button>
+              </div>
+            </div>
+
+            <div class="preference-row">
+              <div>
+                <h3>Preferovaný formát</h3>
+                <p>Uprav, jestli chceš více krátkých úkolů, videí nebo textových poznámek.</p>
+              </div>
+              <div class="chip-row">
+                <button class="pref-chip active">Krátké mise</button>
+                <button class="pref-chip">Video lekce</button>
+                <button class="pref-chip">Poznámky</button>
+              </div>
+            </div>
+
+            <div class="preference-row">
+              <div>
+                <h3>AI asistent</h3>
+                <p>Nastav si, jak má asistent pomáhat při rozhovorech, shrnutí feedbacku a dalších krocích.</p>
+              </div>
+              <div class="chip-row">
+                <button class="pref-chip active">Praktické návrhy</button>
+                <button class="pref-chip">Shrnutí feedbacku</button>
+                <button class="pref-chip red">Tvrdší challenge</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel profile-section">
+          <div class="profile-section-head">
+            <h2>Účet a prostředí</h2>
+            <span>Základní preference aplikace</span>
+          </div>
+
+          <div class="account-grid">
+            <div class="account-box">
+              <strong>Jazyk aplikace</strong>
+              <span>Čeština</span>
+            </div>
+
+            <div class="account-box">
+              <strong>Časové pásmo</strong>
+              <span>Europe/Prague</span>
+            </div>
+
+            <div class="account-box">
+              <strong>Téma rozhraní</strong>
+              <span>Světlé, přehledné a optimalizované pro mobilní průchod</span>
+            </div>
+
+            <div class="account-box">
+              <strong>Soukromí dat</strong>
+              <span>Používat poznámky a progres pro personalizaci doporučení</span>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <a class="ghost-action" href="courses.html">Zpět na kurzy</a>
+            <a class="action primary-red" href="assistant.html">Otevřít AI asistenta</a>
+          </div>
+
+          <p class="profile-note">Profil teď funguje jako osobní dashboard i nastavení aplikace v jednom, aby odpovídal produktovému směru zbytku rozhraní.</p>
         </section>
       </main>
 
       <nav class="bottom-nav" data-bottom-nav>
-        <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5L12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg><span>Domů</span></a>
-        <a href="courses.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg><span>Kurzy</span></a>
-        <a href="progress.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5"></path><path d="M10 19V9"></path><path d="M16 19v-4"></path><path d="M22 19V3"></path></svg><span>Pokrok</span></a>
-        <a href="assistant.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3"></path><rect x="6" y="8" width="12" height="10" rx="4"></rect><path d="M9 13h.01"></path><path d="M15 13h.01"></path><path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path></svg><span>AI</span></a>
-        <a href="profile.html" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 1 0-16 0"></path><circle cx="12" cy="8" r="4"></circle></svg><span>Profil</span></a>
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 10.5L12 3l9 7.5"></path>
+            <path d="M5 9.5V21h14V9.5"></path>
+          </svg>
+          <span>Domů</span>
+        </a>
+        <a href="courses.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+            <path d="M8 8h8M8 12h8M8 16h5"></path>
+          </svg>
+          <span>Kurzy</span>
+        </a>
+        <a href="progress.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19V5"></path>
+            <path d="M10 19V9"></path>
+            <path d="M16 19v-4"></path>
+            <path d="M22 19V3"></path>
+          </svg>
+          <span>Pokrok</span>
+        </a>
+        <a href="assistant.html">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v3"></path>
+            <rect x="6" y="8" width="12" height="10" rx="4"></rect>
+            <path d="M9 13h.01"></path>
+            <path d="M15 13h.01"></path>
+            <path d="M9.5 16c.7.67 1.52 1 2.5 1s1.8-.33 2.5-1"></path>
+          </svg>
+          <span>AI</span>
+        </a>
+        <a href="profile.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21a8 8 0 1 0-16 0"></path>
+            <circle cx="12" cy="8" r="4"></circle>
+          </svg>
+          <span>Profil</span>
+        </a>
       </nav>
     </div>
   </div>
