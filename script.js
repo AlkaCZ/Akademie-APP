@@ -124,12 +124,33 @@ function setupAssistantChips() {
       input.focus();
     });
   });
+
+}
+
+function setupDiscussionSearch() {
+  const searchWrap = document.querySelector('[data-discussion-search]');
+  const list = document.querySelector('[data-discussion-list]');
+  if (!searchWrap || !list) return;
+
+  const input = searchWrap.querySelector('input');
+  const items = Array.from(list.querySelectorAll('.discussion-item'));
+  if (!input || !items.length) return;
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+
+    items.forEach(item => {
+      const text = item.innerText.toLowerCase();
+      item.classList.toggle('is-hidden', !text.includes(q));
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   enhanceCourses();
   enhanceCourseActions();
   setupSearch();
+  setupDiscussionSearch();
   setupBottomNav();
   setupHeroPulse();
   setupAssistantChips();
